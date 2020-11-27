@@ -8,11 +8,15 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="resources/materialize/css/materialize.min.css"
+        <link type="text/css" rel="stylesheet" href="resources/materialize/css/materialize.min.css" 
             media="screen,projection" />
+
+        <link type="text/css" rel="stylesheet" href="resources/css/maps.css" />
 
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpJoGxIxihzAg4EDagm1sMbfku_PMImNI&callback=initMap&libraries=&v=weekly" defer></script>
 
         <title>SRI</title>
     </head>
@@ -36,45 +40,9 @@
         </ul>
         <!-- Fin Barra de navegación -->
 
-        <!-- Inicio Tabla Filtros -->
-        <table>
-            <tr>
-                <td>
-                    <div class="input-field col s6">
-                        <input id="itemFilter" type="text" onkeyup="applyFilter()" class="validate">
-                        <label for="itemFilter">Item Name</label>
-                      </div>
-                </td>
-
-                <td>
-                    <div class="input-field col s6">
-                        <input id="maxAmount" type="text" onkeyup="applyFilter()" class="validate">
-                        <label for="maxAmount">Max Amount</label>
-                      </div>
-                </td>
-
-            </tr>
-        </table>
-        <!-- Fin Tabla Filtros -->
-
-        <!-- Inicio Tabla de datos -->
-        <table class="striped">
-            <thead>
-                <tr>
-                    <th>OrderDate</th>
-                    <th>Region</th>
-                    <th>Rep</th>
-                    <th>Item</th>
-                    <th>Units</th>
-                    <th>Unit Cost</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-
-            <tbody id="tableBody">
-            </tbody>
-        </table>
-        <!-- Fin Tabla de datos -->
+        <!-- Inicio mapa -->
+            <div id="map"></div>
+        <!-- Fin mapa -->
 
         <!-- Inicio Footer -->
         <footer class="page-footer">
@@ -109,7 +77,7 @@
         <script type="text/javascript" src="resources/materialize/js/materialize.min.js"></script>
 
         <script type="text/javascript" src="resources/js/init.js"></script>
-        <script type="text/javascript" src="resources/js/tableFunctions.js"></script>
+        <script type="text/javascript" src="resources/js/mapsFunctions.js"></script>
     </body>
 
 </html>
