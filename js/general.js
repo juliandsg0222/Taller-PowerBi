@@ -1,5 +1,5 @@
 function DibujarTabla() {
-    fetch('https://www.datos.gov.co/resource/2x55-9wxm.json?$limit=250000')
+    fetch('https://www.datos.gov.co/resource/2x55-9wxm.json')
         .then(response => response.json())
         .then(data => {
             let tablaICFES = '';
