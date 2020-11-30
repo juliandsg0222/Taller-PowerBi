@@ -29,46 +29,70 @@ function llenarArreglo() {
                         .then(response => response.json())
                         .then(unicos_datos_uni => {
                             let p_g = 0;
+                            let d_g = 0
                             let p_i = 0;
+                            let d_i = 0;
                             let p_r = 0;
+                            let d_r = 0;
                             let p_l = 0;
+                            let d_l = 0;
                             let p_cp = 0;
+                            let d_cp = 0;
                             let p_co = 0;
+                            let d_co = 0;
                             unicos_datos_uni.forEach(uni => {
                                 if (uni.punt_global != undefined) {
                                     p_g += parseInt(uni.punt_global);
+                                }
+                                else{
+                                    d_g += 1;
                                 }
 
                                 if (uni.mod_ingles_punt != undefined) {
                                     p_i += parseInt(uni.mod_ingles_punt);
                                 }
+                                else{
+                                    d_i += 1;
+                                }
 
                                 if (uni.mod_razona_cuantitat_punt != undefined) {
                                     p_r += parseInt(uni.mod_razona_cuantitat_punt);
+                                }
+                                else{
+                                    d_r += 1;
                                 }
 
                                 if (uni.mod_lectura_critica_punt != undefined) {
                                     p_l += parseInt(uni.mod_lectura_critica_punt);
                                 }
+                                else{
+                                    d_l += 1;
+                                }
 
                                 if (uni.mod_competen_ciudada_punt != undefined) {
                                     p_cp += parseInt(uni.mod_competen_ciudada_punt);
                                 }
+                                else{
+                                    d_cp += 1;
+                                }
 
                                 if (uni.mod_comuni_escrita_punt != undefined) {
                                     p_co += parseInt(uni.mod_comuni_escrita_punt);
+                                }
+                                else{
+                                    d_co += 1;
                                 }
                             });
 
                             tablaICFES += `<tr>
                                 <td>${conta++}</td>
                                 <td>${unive.inst_nombre_institucion}</td>
-                                <td>${Math.round(p_g/unicos_datos_uni.length)}</td>
-                                <td>${Math.round(p_i/unicos_datos_uni.length)}</td>
-                                <td>${Math.round(p_r/unicos_datos_uni.length)}</td>
-                                <td>${Math.round(p_l/unicos_datos_uni.length)}</td>
-                                <td>${Math.round(p_cp/unicos_datos_uni.length)}</td>
-                                <td>${Math.round(p_co/unicos_datos_uni.length)}</td>
+                                <td>${Math.round(p_g/(unicos_datos_uni.length - d_g))}</td>
+                                <td>${Math.round(p_i/(unicos_datos_uni.length - d_i))}</td>
+                                <td>${Math.round(p_r/(unicos_datos_uni.length - d_r))}</td>
+                                <td>${Math.round(p_l/(unicos_datos_uni.length - d_l))}</td>
+                                <td>${Math.round(p_cp/(unicos_datos_uni.length - d_cp))}</td>
+                                <td>${Math.round(p_co/(unicos_datos_uni.length - d_co))}</td>
                             </tr>`;
 
                             document.querySelector("#tablaICFES").innerHTML = tablaICFES;
