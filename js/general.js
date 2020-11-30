@@ -8,65 +8,74 @@ var insti = 'UNIVERSIDAD NACIONAL DE COLOMBIA-MANIZALES';
 // Estructura para consultar datos completos de una sola institucion:
 // enlace + datos_importantes + comillas + insti + comillas + limite
 
+conta = 1;
 
-function DibujarTabla() {
-    
+function llenarArreglo() {
+
     // Inicio arreglo de instituciones
     fetch(enlace + instituciones)
-    .then(response => response.json())
-    .then(arreglo_uni => {
-        let tablaICFES = '';
-        let conta = 0;
-        arreglo_uni.forEach(uni => {
-            fetch(enlace + datos_importantes + comillas + uni.inst_nombre_institucion + comillas + limite)
-            .then(response => response.json())
-            .then(unicos_datos_uni => {
-                unicos_datos_uni.forEach(registro => {
-                tablaICFES += `<tr>
-                    <td>${conta++}</td>
-                    <td>${registro.inst_nombre_institucion}</td>
-                    <td>${registro.punt_global}</td>
-                    <td>${registro.mod_ingles_punt}</td>
-                    <td>${registro.mod_razona_cuantitat_punt}</td>
-                    <td>${registro.mod_lectura_critica_punt}</td>
-                    <td>${registro.mod_competen_ciudada_punt}</td>
-                    <td>${registro.mod_comuni_escrita_punt}</td>
-                </tr>`;
-                })
-            document.querySelector("#tablaICFES").innerHTML = tablaICFES;
-            })
-            
+        .then(response => response.json())
+        .then(arreglo_uni => {
+            arreglo_uni.forEach(unive => {
+                let sentencia = enlace + datos_importantes + comillas + unive.inst_nombre_institucion + comillas + limite;
+
+                let malo1 = "https://www.datos.gov.co/resource/2x55-9wxm.json?$select=inst_nombre_institucion,%20punt_global,%20mod_ingles_punt,%20mod_razona_cuantitat_punt,%20mod_lectura_critica_punt,%20mod_competen_ciudada_punt,%20mod_comuni_escrita_punt&$where=inst_nombre_institucion=%27UNIVERSIDAD DEL SINÚ 'Elías Bechara Zainúm' - UNISINÚ-CARTAGENA%27&$limit=260756&$offset=0";
+                let malo2 = "https://www.datos.gov.co/resource/2x55-9wxm.json?$select=inst_nombre_institucion,%20punt_global,%20mod_ingles_punt,%20mod_razona_cuantitat_punt,%20mod_lectura_critica_punt,%20mod_competen_ciudada_punt,%20mod_comuni_escrita_punt&$where=inst_nombre_institucion=%27UNIVERSIDAD DEL SINÚ 'Elías Bechara Zainúm' - UNISINÚ-MONTERIA%27&$limit=260756&$offset=0";
+
+                if (sentencia != malo1 && sentencia != malo2) {
+                    tablaICFES = '';
+                    // Inicio total registros de cada institucion
+                    fetch(enlace + datos_importantes + comillas + unive.inst_nombre_institucion + comillas + limite)
+                        .then(response => response.json())
+                        .then(unicos_datos_uni => {
+                            let p_g = 0;
+                            let p_i = 0;
+                            let p_r = 0;
+                            let p_l = 0;
+                            let p_cp = 0;
+                            let p_co = 0;
+                            unicos_datos_uni.forEach(uni => {
+                                if (uni.punt_global != undefined) {
+                                    p_g += parseInt(uni.punt_global);
+                                }
+
+                                if (uni.mod_ingles_punt != undefined) {
+                                    p_i += parseInt(uni.mod_ingles_punt);
+                                }
+
+                                if (uni.mod_razona_cuantitat_punt != undefined) {
+                                    p_r += parseInt(uni.mod_razona_cuantitat_punt);
+                                }
+
+                                if (uni.mod_lectura_critica_punt != undefined) {
+                                    p_l += parseInt(uni.mod_lectura_critica_punt);
+                                }
+
+                                if (uni.mod_competen_ciudada_punt != undefined) {
+                                    p_cp += parseInt(uni.mod_competen_ciudada_punt);
+                                }
+
+                                if (uni.mod_comuni_escrita_punt != undefined) {
+                                    p_co += parseInt(uni.mod_comuni_escrita_punt);
+                                }
+                            });
+
+                            tablaICFES += `<tr>
+                                <td>${conta++}</td>
+                                <td>${unive.inst_nombre_institucion}</td>
+                                <td>${Math.round(p_g/unicos_datos_uni.length)}</td>
+                                <td>${Math.round(p_i/unicos_datos_uni.length)}</td>
+                                <td>${Math.round(p_r/unicos_datos_uni.length)}</td>
+                                <td>${Math.round(p_l/unicos_datos_uni.length)}</td>
+                                <td>${Math.round(p_cp/unicos_datos_uni.length)}</td>
+                                <td>${Math.round(p_co/unicos_datos_uni.length)}</td>
+                            </tr>`;
+
+                            document.querySelector("#tablaICFES").innerHTML = tablaICFES;
+                        });
+                }
+            });
         });
-
-    });
-
-
 }
 
-
-
-//     fetch(enlace)
-//         .then(response => response.json())
-//         .then(data => {
-//             let tablaICFES = '';
-//             let conta = 0;
-//             console.log("Número de registros:" + data.length);
-//             data.forEach(element => {
-//                 tablaICFES += `<tr>
-//             <td>${conta++}</td>
-//             <td>${element.inst_nombre_institucion}</td>
-//             <td>${element.punt_global}</td>
-//             <td>${element.mod_ingles_punt}</td>
-//             <td>${element.mod_razona_cuantitat_punt}</td>
-//             <td>${element.mod_lectura_critica_punt}</td>
-//             <td>${element.mod_competen_ciudada_punt}</td>
-//             <td>${element.mod_comuni_escrita_punt}</td>
-//             </tr>`;
-//             });
-
-//             document.querySelector("#tablaICFES").innerHTML = tablaICFES;
-//         });
-        
-// }
-
-DibujarTabla();
+llenarArreglo();
