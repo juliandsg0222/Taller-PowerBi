@@ -8,22 +8,43 @@ var insti = 'UNIVERSIDAD NACIONAL DE COLOMBIA-MANIZALES';
 // Estructura para consultar datos completos de una sola institucion:
 // enlace + datos_importantes + comillas + insti + comillas + limite
 
+class InstitucionesICFES{
+
+    constructor(nombre, pg, pi, pr, pl, pcc, pce){
+        this.nombre = nombre;
+        this.pg = pg;
+        this.pi = pi;
+        this.pr = pr;
+        this.pl = pl;
+        this.pcc = pcc;
+        this.pce = pce;
+    }
+
+}
+
+
 conta = 1;
 
 function llenarArreglo() {
+        
+    var arregloICFES = [];
 
     // Inicio arreglo de instituciones
     fetch(enlace + instituciones)
         .then(response => response.json())
         .then(arreglo_uni => {
+            var tam = arreglo_uni.length - 2;
             arreglo_uni.forEach(unive => {
                 let sentencia = enlace + datos_importantes + comillas + unive.inst_nombre_institucion + comillas + limite;
 
                 let malo1 = "https://www.datos.gov.co/resource/2x55-9wxm.json?$select=inst_nombre_institucion,%20punt_global,%20mod_ingles_punt,%20mod_razona_cuantitat_punt,%20mod_lectura_critica_punt,%20mod_competen_ciudada_punt,%20mod_comuni_escrita_punt&$where=inst_nombre_institucion=%27UNIVERSIDAD DEL SINÚ 'Elías Bechara Zainúm' - UNISINÚ-CARTAGENA%27&$limit=260756&$offset=0";
+
                 let malo2 = "https://www.datos.gov.co/resource/2x55-9wxm.json?$select=inst_nombre_institucion,%20punt_global,%20mod_ingles_punt,%20mod_razona_cuantitat_punt,%20mod_lectura_critica_punt,%20mod_competen_ciudada_punt,%20mod_comuni_escrita_punt&$where=inst_nombre_institucion=%27UNIVERSIDAD DEL SINÚ 'Elías Bechara Zainúm' - UNISINÚ-MONTERIA%27&$limit=260756&$offset=0";
 
+
+
                 if (sentencia != malo1 && sentencia != malo2) {
-                    tablaICFES = '';
+
                     // Inicio total registros de cada institucion
                     fetch(enlace + datos_importantes + comillas + unive.inst_nombre_institucion + comillas + limite)
                         .then(response => response.json())
@@ -36,10 +57,10 @@ function llenarArreglo() {
                             let d_r = 0;
                             let p_l = 0;
                             let d_l = 0;
-                            let p_cp = 0;
-                            let d_cp = 0;
-                            let p_co = 0;
-                            let d_co = 0;
+                            let p_cc = 0;
+                            let d_cc = 0;
+                            let p_ce = 0;
+                            let d_ce = 0;
                             unicos_datos_uni.forEach(uni => {
                                 if (uni.punt_global != undefined) {
                                     p_g += parseInt(uni.punt_global);
@@ -70,36 +91,61 @@ function llenarArreglo() {
                                 }
 
                                 if (uni.mod_competen_ciudada_punt != undefined) {
-                                    p_cp += parseInt(uni.mod_competen_ciudada_punt);
+                                    p_cc += parseInt(uni.mod_competen_ciudada_punt);
                                 }
                                 else{
-                                    d_cp += 1;
+                                    d_cc += 1;
                                 }
 
                                 if (uni.mod_comuni_escrita_punt != undefined) {
-                                    p_co += parseInt(uni.mod_comuni_escrita_punt);
+                                    p_ce += parseInt(uni.mod_comuni_escrita_punt);
                                 }
                                 else{
-                                    d_co += 1;
+                                    d_ce += 1;
                                 }
                             });
 
-                            tablaICFES += `<tr>
-                                <td>${conta++}</td>
-                                <td>${unive.inst_nombre_institucion}</td>
-                                <td>${Math.round(p_g/(unicos_datos_uni.length - d_g))}</td>
-                                <td>${Math.round(p_i/(unicos_datos_uni.length - d_i))}</td>
-                                <td>${Math.round(p_r/(unicos_datos_uni.length - d_r))}</td>
-                                <td>${Math.round(p_l/(unicos_datos_uni.length - d_l))}</td>
-                                <td>${Math.round(p_cp/(unicos_datos_uni.length - d_cp))}</td>
-                                <td>${Math.round(p_co/(unicos_datos_uni.length - d_co))}</td>
-                            </tr>`;
+                            let obj = new InstitucionesICFES(unive.inst_nombre_institucion, p_g/(unicos_datos_uni.length - d_g), p_i/(unicos_datos_uni.length - d_i), p_r/(unicos_datos_uni.length - d_r), p_l/(unicos_datos_uni.length - d_l), p_cc/(unicos_datos_uni.length - d_cc), p_ce/(unicos_datos_uni.length - d_ce));
 
-                            document.querySelector("#tablaICFES").innerHTML = tablaICFES;
+                            arregloICFES.push(obj);
+
+                            if(conta == tam){
+                                funcionMagica(arregloICFES);
+                            }
+                            
+                            conta++;
+
                         });
+
                 }
+
             });
+
         });
 }
 
+function funcionMagica(vectorX){
+    var j = 1;
+    tablaICFES = '';    
+    vectorX.forEach( i => {
+        tablaICFES += `<tr>
+        <td>${j++}</td>
+        <td>${i.nombre}</td>
+        <td>${Math.round(i.pg)}</td>
+        <td>${Math.round(i.pi)}</td>
+        <td>${Math.round(i.pr)}</td>
+        <td>${Math.round(i.pl)}</td>
+        <td>${Math.round(i.pcc)}</td>
+        <td>${Math.round(i.pce)}</td>
+    </tr>`;
+
+    document.querySelector("#tablaICFES").innerHTML = tablaICFES;
+    })
+
+    alert("Consulta finalizada");
+}
+
+
+
 llenarArreglo();
+alert("Se ha iniciado la consulta, por favor espere hasta 15 segundos");
