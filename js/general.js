@@ -26,7 +26,7 @@ class InstitucionesICFES{
 conta = 1;
 
 function llenarArreglo() {
-        
+    
     var arregloICFES = [];
 
     // Inicio arreglo de instituciones
@@ -110,9 +110,8 @@ function llenarArreglo() {
                             arregloICFES.push(obj);
 
                             if(conta == tam){
-                                funcionMagica(arregloICFES);
+                                funcionMagica(arregloICFES, 'PG DESC');
                             }
-                            
                             conta++;
 
                         });
@@ -124,9 +123,66 @@ function llenarArreglo() {
         });
 }
 
-function funcionMagica(vectorX){
+
+function funcionMagica(vectorX, ordenamiento){
     var j = 1;
-    tablaICFES = '';    
+    tablaICFES = '';
+
+    switch (ordenamiento) {
+        case 'PG ASC':
+            vectorX.sort(((a,b) => a.pg - b.pg));
+            break;
+        
+        case 'PG DESC':
+            vectorX.sort(((a,b) => b.pg - a.pg));
+            break;
+
+        case 'PI ASC':
+            vectorX.sort(((a,b) => a.pi - b.pi));
+            break;
+        
+        case 'PI DESC':
+            vectorX.sort(((a,b) => b.pi - a.pi));            
+            break;
+        
+        case 'PR ASC':
+            vectorX.sort(((a,b) => a.pr - b.pr));
+            break;
+        
+        case 'PR DESC':
+            vectorX.sort(((a,b) => b.pr - a.pr));
+            break;
+
+        case 'PL ASC':
+            vectorX.sort(((a,b) => a.pl - b.pl));
+            break;
+        
+        case 'PL DESC':
+            vectorX.sort(((a,b) => b.pl - a.pl));
+            break;
+
+        case 'PCC ASC':
+            vectorX.sort(((a,b) => a.pcc - b.pcc));
+            break;
+        
+        case 'PCC DESC':
+            vectorX.sort(((a,b) => b.pcc - b.pcc));
+            break;
+
+        case 'PCE ASC':
+            vectorX.sort(((a,b) => a.pce - b.pce));
+            break;
+        
+        case 'PCE ASC':
+            vectorX.sort(((a,b) => b.pce - a.pce));
+            break;
+                
+    
+        default:
+
+            break;
+    }
+
     vectorX.forEach( i => {
         tablaICFES += `<tr>
         <td>${j++}</td>
@@ -142,10 +198,6 @@ function funcionMagica(vectorX){
     document.querySelector("#tablaICFES").innerHTML = tablaICFES;
     })
 
-    alert("Consulta finalizada");
 }
 
-
-
 llenarArreglo();
-alert("Se ha iniciado la consulta, por favor espere hasta 15 segundos");
