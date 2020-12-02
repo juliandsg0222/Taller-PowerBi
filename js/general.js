@@ -8,9 +8,9 @@ var insti = 'UNIVERSIDAD NACIONAL DE COLOMBIA-MANIZALES';
 // Estructura para consultar datos completos de una sola institucion:
 // enlace + datos_importantes + comillas + insti + comillas + limite
 
-class InstitucionesICFES{
+class InstitucionesICFES {
 
-    constructor(nombre, pg, pi, pr, pl, pcc, pce){
+    constructor(nombre, pg, pi, pr, pl, pcc, pce) {
         this.nombre = nombre;
         this.pg = pg;
         this.pi = pi;
@@ -26,7 +26,7 @@ class InstitucionesICFES{
 conta = 1;
 
 function llenarArreglo() {
-    
+
     var arregloICFES = [];
 
     // Inicio arreglo de instituciones
@@ -64,52 +64,46 @@ function llenarArreglo() {
                             unicos_datos_uni.forEach(uni => {
                                 if (uni.punt_global != undefined) {
                                     p_g += parseInt(uni.punt_global);
-                                }
-                                else{
+                                } else {
                                     d_g += 1;
                                 }
 
                                 if (uni.mod_ingles_punt != undefined) {
                                     p_i += parseInt(uni.mod_ingles_punt);
-                                }
-                                else{
+                                } else {
                                     d_i += 1;
                                 }
 
                                 if (uni.mod_razona_cuantitat_punt != undefined) {
                                     p_r += parseInt(uni.mod_razona_cuantitat_punt);
-                                }
-                                else{
+                                } else {
                                     d_r += 1;
                                 }
 
                                 if (uni.mod_lectura_critica_punt != undefined) {
                                     p_l += parseInt(uni.mod_lectura_critica_punt);
-                                }
-                                else{
+                                } else {
                                     d_l += 1;
                                 }
 
                                 if (uni.mod_competen_ciudada_punt != undefined) {
                                     p_cc += parseInt(uni.mod_competen_ciudada_punt);
-                                }
-                                else{
+                                } else {
                                     d_cc += 1;
                                 }
 
                                 if (uni.mod_comuni_escrita_punt != undefined) {
                                     p_ce += parseInt(uni.mod_comuni_escrita_punt);
-                                }
-                                else{
+                                } else {
                                     d_ce += 1;
                                 }
                             });
 
-                            let obj = new InstitucionesICFES(unive.inst_nombre_institucion, p_g/(unicos_datos_uni.length - d_g), p_i/(unicos_datos_uni.length - d_i), p_r/(unicos_datos_uni.length - d_r), p_l/(unicos_datos_uni.length - d_l), p_cc/(unicos_datos_uni.length - d_cc), p_ce/(unicos_datos_uni.length - d_ce));
+                            let obj = new InstitucionesICFES(unive.inst_nombre_institucion, p_g / (unicos_datos_uni.length - d_g), p_i / (unicos_datos_uni.length - d_i), p_r / (unicos_datos_uni.length - d_r), p_l / (unicos_datos_uni.length - d_l), p_cc / (unicos_datos_uni.length - d_cc), p_ce / (unicos_datos_uni.length - d_ce));
 
                             arregloICFES.push(obj);
 
-                            if(conta == tam){
+                            if (conta == tam) {
                                 funcionMagica(arregloICFES, 'PG DESC');
                             }
                             conta++;
@@ -124,66 +118,66 @@ function llenarArreglo() {
 }
 
 
-function funcionMagica(vectorX, ordenamiento){
+function funcionMagica(vectorX, ordenamiento) {
     var j = 1;
     tablaICFES = '';
 
     switch (ordenamiento) {
         case 'PG ASC':
-            vectorX.sort(((a,b) => a.pg - b.pg));
+            vectorX.sort(((a, b) => a.pg - b.pg));
             break;
-        
+
         case 'PG DESC':
-            vectorX.sort(((a,b) => b.pg - a.pg));
+            vectorX.sort(((a, b) => b.pg - a.pg));
             break;
 
         case 'PI ASC':
-            vectorX.sort(((a,b) => a.pi - b.pi));
+            vectorX.sort(((a, b) => a.pi - b.pi));
             break;
-        
+
         case 'PI DESC':
-            vectorX.sort(((a,b) => b.pi - a.pi));            
+            vectorX.sort(((a, b) => b.pi - a.pi));
             break;
-        
+
         case 'PR ASC':
-            vectorX.sort(((a,b) => a.pr - b.pr));
+            vectorX.sort(((a, b) => a.pr - b.pr));
             break;
-        
+
         case 'PR DESC':
-            vectorX.sort(((a,b) => b.pr - a.pr));
+            vectorX.sort(((a, b) => b.pr - a.pr));
             break;
 
         case 'PL ASC':
-            vectorX.sort(((a,b) => a.pl - b.pl));
+            vectorX.sort(((a, b) => a.pl - b.pl));
             break;
-        
+
         case 'PL DESC':
-            vectorX.sort(((a,b) => b.pl - a.pl));
+            vectorX.sort(((a, b) => b.pl - a.pl));
             break;
 
         case 'PCC ASC':
-            vectorX.sort(((a,b) => a.pcc - b.pcc));
+            vectorX.sort(((a, b) => a.pcc - b.pcc));
             break;
-        
+
         case 'PCC DESC':
-            vectorX.sort(((a,b) => b.pcc - b.pcc));
+            vectorX.sort(((a, b) => b.pcc - b.pcc));
             break;
 
         case 'PCE ASC':
-            vectorX.sort(((a,b) => a.pce - b.pce));
+            vectorX.sort(((a, b) => a.pce - b.pce));
             break;
-        
+
         case 'PCE ASC':
-            vectorX.sort(((a,b) => b.pce - a.pce));
+            vectorX.sort(((a, b) => b.pce - a.pce));
             break;
-                
-    
+
+
         default:
 
             break;
     }
 
-    vectorX.forEach( i => {
+    vectorX.forEach(i => {
         tablaICFES += `<tr>
         <td>${j++}</td>
         <td>${i.nombre}</td>
@@ -195,7 +189,7 @@ function funcionMagica(vectorX, ordenamiento){
         <td>${Math.round(i.pce)}</td>
     </tr>`;
 
-    document.querySelector("#tablaICFES").innerHTML = tablaICFES;
+        document.querySelector("#tablaICFES").innerHTML = tablaICFES;
     })
 
 }

@@ -17,7 +17,7 @@ function obtenerValores() {
                     risaralda.push(element.risaralda);
                     valle.push(element.valle_del_cauca);
                     quindio.push(element.quindio);
-                    inicio.push(element.fecha.slice(0,10));
+                    inicio.push(element.fecha.slice(0, 10));
                 }
             });
 
@@ -83,7 +83,7 @@ function obtenerValores() {
 
                 xaxis: {
                     title: {
-                        text: 'Formato: AAAA-MM-DD <br> Desde:' + inicio[0] + " (Día 0) <br> Hasta " + inicio[(inicio.length-1)] + " (Día " + inicio.length + ")"
+                        text: 'Formato: AAAA-MM-DD <br> Desde:' + inicio[0] + " (Día 0) <br> Hasta " + inicio[(inicio.length - 1)] + " (Día " + inicio.length + ")"
                     }
                 },
 
@@ -99,7 +99,7 @@ function obtenerValores() {
 
             // Hasta aquí se puede utilizar el arreglo
         });
-    
+
 }
 
 obtenerValores();
